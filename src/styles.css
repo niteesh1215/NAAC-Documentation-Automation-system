@@ -1,1 +1,21 @@
 /* You can add global styles to this file, and also import other style files */
+:root {
+    --primary: #6a65a7;
+    --secondary: #F2F5F7;
+  
+    --selected: rgba(196, 196, 196, 0.16);
+  }
+  
+  .my-bg-primary {
+    background-color: var(--primary);
+  }
+  .my-bg-secondary {
+    background-color: var(--secondary);
+  }
+  
+  .selected{
+      background-color:var(--selected);
+  }
+  html, body { height: 100%; }
+  body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+  

@@ -20,16 +20,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'NAAC-Documentation-Automation-system'`, () => {
+  it(`should have as title 'NAAC-Documentation-System'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('NAAC-Documentation-Automation-system');
+    expect(app.title).toEqual('NAAC-Documentation-System');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('NAAC-Documentation-Automation-system app is running!');
+    expect(compiled.querySelector('.content span')?.textContent).toContain('NAAC-Documentation-System app is running!');
   });
 });

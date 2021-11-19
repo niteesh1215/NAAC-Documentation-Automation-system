@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'NAAC-Documentation-Automation-system';
+  title = 'NAAC-Documentation-System';
 }
