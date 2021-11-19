@@ -7,6 +7,7 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { MainComponent } from './components/main/main.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FilesHeaderComponent } from './components/main/files/files-header/files-header.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MainComponent,
     routingComponents,
     PageNotFoundComponent,
+    FilesHeaderComponent,
   ],
   imports: [
     BrowserModule,

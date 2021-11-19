@@ -9,8 +9,11 @@
     <ul class="nav  flex-column mb-auto">
 
         <li *ngFor="let option of sideBarOptions">
-            <a routerLink="{{option.routePath}}" routerLinkActive="selected" class="nav-link  text-white">
-                
+            <a routerLink="{{option.routePath}}" routerLinkActive="selected"
+                class="nav-link  text-white d-flex align-items-center">
+                <span class="mx-2 material-icons-outlined">
+                    {{option.icon}}
+                </span>
                 {{option.name}}
             </a>
         </li>

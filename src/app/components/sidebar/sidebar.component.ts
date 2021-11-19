@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MenuOption } from 'src/app/models/MenuOption';
+import { IconType, MenuOption } from 'src/app/models/MenuOption';
 
 @Component({
   selector: 'app-sidebar',
@@ -11,12 +11,16 @@ export class SidebarComponent implements OnInit {
     {
       name: 'Dashboard',
       active: true,
-      routePath: '/dashboard'
+      routePath: '/dashboard',
+      icon: 'dashboard',
+      iconType: IconType.material
     },
     {
       name: 'Files',
       active: false,
-      routePath:'/files'
+      routePath: '/files',
+      icon: 'file_copy',
+      iconType: IconType.material,
     },
   ];
   constructor() { }
