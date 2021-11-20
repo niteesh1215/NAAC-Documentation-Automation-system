@@ -1,9 +1,25 @@
-.files-header{
-    background-color: var(--secondary-light);
-    border: solid 1px var(--border-color);
-    padding: 8px;
+.files-header {
+  background-color: var(--secondary-light);
+  border: solid 1px var(--border-color);
+  padding: 8px;
 }
 
-.view-button{
-    
+.view-button {
+  margin: 8px;
+  height: 45px;
+  width: 45px;
+  border-radius: 50%;
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.view-button:hover {
+  background-color: var(--selected);
+}
+
+.view-button.selected {
+  background-color: var(--primary);
+  color: var(--text-primary);
 }

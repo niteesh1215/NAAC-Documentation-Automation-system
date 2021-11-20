@@ -13,6 +13,7 @@ body {
   --secondary-light: #fff;
   --selected: rgba(196, 196, 196, 0.16);
   --border-color: #B7B7B7;
+  --text-primary: #fff;
 }
 
 .my-bg-primary {

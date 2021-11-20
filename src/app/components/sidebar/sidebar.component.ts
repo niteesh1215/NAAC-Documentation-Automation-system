@@ -22,6 +22,13 @@ export class SidebarComponent implements OnInit {
       icon: 'file_copy',
       iconType: IconType.material,
     },
+    {
+      name: 'Dashboard',
+      active: true,
+      routePath: '/dashboard',
+      icon: 'dashboard',
+      iconType: IconType.material
+    },
   ];
   constructor() { }
 

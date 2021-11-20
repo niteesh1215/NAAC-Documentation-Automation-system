@@ -8,6 +8,7 @@ import { MainComponent } from './components/main/main.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FilesHeaderComponent } from './components/main/files/files-header/files-header.component';
+import { FormBuilderComponent } from './components/main/form-builder/form-builder.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { FilesHeaderComponent } from './components/main/files/files-header/files
     routingComponents,
     PageNotFoundComponent,
     FilesHeaderComponent,
+    FormBuilderComponent,
   ],
   imports: [
     BrowserModule,

@@ -33,7 +33,10 @@
             ],
             "scripts": [
               "./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
-              "./node_modules/jquery/dist/jquery.min.js"
+              "./node_modules/jquery/dist/jquery.min.js",
+              "./node_modules/jquery-ui-sortable/jquery-ui.min.js",
+              "./node_modules/formBuilder/dist/form-builder.min.js",
+              "./node_modules/formBuilder/dist/form-render.min.js"
             ]
           },
           "configurations": {

@@ -14,12 +14,17 @@
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-success" type="submit">Search</button>
             </form>
-            <span class="m-3 material-icons-outlined">
+
+            <span class="material-icons-outlined" [ngClass]="{'view-button':true,'selected':!isGridView}"
+                (click)="changeView()">
                 view_list
             </span>
-            <span class="m-3 material-icons-outlined">
+
+            <span class="material-icons-outlined view-button" [ngClass]="{'view-button':true,'selected':isGridView}"
+                (click)="changeView()">
                 grid_view
             </span>
+
         </div>
     </div>
 </nav>
