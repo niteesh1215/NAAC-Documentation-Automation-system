@@ -21,7 +21,19 @@ export class FormBuilderComponent implements OnInit {
 
 
   ngOnInit(): void {
-    $('#form-builder-container').formBuilder({})
+    var formBuilder = $('#form-builder-container').formBuilder({
+      showActionButtons: false
+    });
+
+    $('#clear-form-builder').click(function () {
+      formBuilder.actions.clearFields();
+    });
+
+    $('#save-form-builder').click(function () {
+      var getData = formBuilder.actions.getData('json', true);
+      console.log(getData);
+      //todo: call api to save form
+    });
   }
 
 

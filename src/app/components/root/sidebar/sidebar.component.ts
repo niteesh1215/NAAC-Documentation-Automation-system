@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { IconType, MenuOption } from 'src/app/models/MenuOption';
 
 @Component({
@@ -22,15 +23,8 @@ export class SidebarComponent implements OnInit {
       icon: 'file_copy',
       iconType: IconType.material,
     },
-    {
-      name: 'Dashboard',
-      active: true,
-      routePath: '/dashboard',
-      icon: 'dashboard',
-      iconType: IconType.material
-    },
   ];
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -41,6 +35,12 @@ export class SidebarComponent implements OnInit {
       this.sideBarOptions[i].active = false;
     }
     this.sideBarOptions[index].active;
+  }
+
+
+  signOut(): void {
+    localStorage.removeItem('token');
+    this.router.navigate(['login']);
   }
 
 }
