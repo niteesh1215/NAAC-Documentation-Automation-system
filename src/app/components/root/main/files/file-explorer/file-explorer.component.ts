@@ -77,4 +77,12 @@ export class FileExplorerComponent implements OnInit {
     this.sendPath(this.router.url)
   }
 
+  deleteFolder(): void{
+
+  }
+
+  renameFolder(): void{
+    
+  }
+
 }
