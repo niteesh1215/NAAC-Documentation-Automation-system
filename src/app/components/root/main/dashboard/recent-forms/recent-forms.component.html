@@ -1,0 +1,19 @@
+<div class="active-form" *ngFor="let option of recentForms">
+    <span class="mx-2 material-icons" style="font-size:76px; color: blue;">{{option.icon}}</span>
+    <div class="file-img">
+        <div class="form-desc">
+            <div>
+                <a href="">{{option.name}}</a>
+            </div>
+            <div>
+                <p><b>{{option.folder}}</b></p>
+            </div>
+            <div>
+                <p>Closed on : <b style="color: blue;">{{option.closedon}}</b></p>
+            </div>
+            <div>
+                <p>Total Responses : <b style="color: blue;">{{option.totalresponses}}</b></p>
+            </div>
+        </div>
+    </div>
+</div>
