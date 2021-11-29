@@ -1,4 +1,5 @@
+<p>Path : {{path}}</p>
 <div class="container-fluid margin">
     <app-files-header></app-files-header>
-    <router-outlet></router-outlet>
+    <router-outlet (activate)="recievePath($event)"></router-outlet>
 </div>

@@ -7,6 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FilesComponent implements OnInit {
 
+  path = '';
+
+  recievePath(newPath: string){
+    this.path = newPath;
+  }
+
   constructor() { }
 
   ngOnInit(): void {

@@ -9,6 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FilesHeaderComponent } from './components/root/main/files/files-header/files-header.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { FileExplorerComponent } from './components/root/main/files/file-explorer/file-explorer.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -16,6 +17,7 @@ import { HttpClientModule } from '@angular/common/http';
     MainComponent,
     routingComponents,
     FilesHeaderComponent,
+    FileExplorerComponent,
   ],
   imports: [
     BrowserModule,

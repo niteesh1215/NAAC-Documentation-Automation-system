@@ -7,6 +7,7 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { RootComponent } from './components/root/root.component';
 import { LoginComponent } from './components/login/login.component';
 import { AuthGuard } from './services/auth/auth.guard';
+import { FileExplorerComponent } from './components/root/main/files/file-explorer/file-explorer.component';
 const routes: Routes = [
   {
     path: '', component: RootComponent, canActivate: [AuthGuard], children: [
@@ -17,7 +18,14 @@ const routes: Routes = [
         path: 'dashboard', component: DashboardComponent,
       },
       {
-        path: 'files', component: FilesComponent,
+        path: 'files', component: FilesComponent, children:[
+          {
+            path: '', component: FileExplorerComponent
+          },
+          {
+            path: '**', component: FileExplorerComponent
+          }
+        ]
       },
       {
         path: 'create-form', component: FormBuilderComponent,
