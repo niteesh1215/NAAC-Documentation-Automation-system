@@ -1,20 +1,21 @@
 <div class="file" *ngFor="let file of mainFolders">
-    <div>
-        <div class="file-info">
-            <a href=""><span class="material-icons" style="font-size:15px; color: #989898;">info</span></a>
+    <a routerLink="{{file.name}}">
+        <div>
+            <div class="file-info">
+                <a href=""><span class="material-icons" style="font-size:15px; color: #989898;">info</span></a>
+            </div>
+            <div style="float: right;">
+                <a href=""><span class="material-icons" style="font-size:18px; color: #989898;">more_vert</span></a>
+            </div>
         </div>
-        <div style="float: right;">
-            <a href=""><span class="material-icons" style="font-size:18px; color: #989898;">more_vert</span></a>
-        </div>
-    </div>
-    <div>
-        <a routerLink = "{{file.name}}">
+        <div>
+
             <div class="folder-icon" style>
                 <span class="material-icons" style="font-size:110px; color: orangered;">folder</span>
             </div>
             <div class="folder-title">
                 {{file.name}}
             </div>
-        </a>
-    </div>
+        </div>
+    </a>
 </div>

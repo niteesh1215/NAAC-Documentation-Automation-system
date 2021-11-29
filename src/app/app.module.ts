@@ -10,6 +10,7 @@ import { FilesHeaderComponent } from './components/root/main/files/files-header/
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { FileExplorerComponent } from './components/root/main/files/file-explorer/file-explorer.component';
+import { ViewformComponent } from './components/viewform/viewform.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -18,6 +19,7 @@ import { FileExplorerComponent } from './components/root/main/files/file-explore
     routingComponents,
     FilesHeaderComponent,
     FileExplorerComponent,
+    ViewformComponent,
   ],
   imports: [
     BrowserModule,

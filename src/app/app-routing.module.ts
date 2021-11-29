@@ -8,6 +8,7 @@ import { RootComponent } from './components/root/root.component';
 import { LoginComponent } from './components/login/login.component';
 import { AuthGuard } from './services/auth/auth.guard';
 import { FileExplorerComponent } from './components/root/main/files/file-explorer/file-explorer.component';
+import { ViewformComponent } from './components/viewform/viewform.component';
 const routes: Routes = [
   {
     path: '', component: RootComponent, canActivate: [AuthGuard], children: [
@@ -18,7 +19,7 @@ const routes: Routes = [
         path: 'dashboard', component: DashboardComponent,
       },
       {
-        path: 'files', component: FilesComponent, children:[
+        path: 'files', component: FilesComponent, children: [
           {
             path: '', component: FileExplorerComponent
           },
@@ -31,6 +32,9 @@ const routes: Routes = [
         path: 'create-form', component: FormBuilderComponent,
       }
     ]
+  },
+  {
+    path: 'viewform/:id', component: ViewformComponent,
   },
   {
     path: 'login', component: LoginComponent,
