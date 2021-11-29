@@ -31,7 +31,12 @@
                 </div>
             </div>
             <div class="card-footer">
-                <button type="submit" [disabled]="!loginForm.valid" class="btn my-bg-primary text-white">Submit</button>
+                <button type="submit" [disabled]="!loginForm.valid" class="btn my-bg-primary text-white">
+                    <span *ngIf="showLoadingButton">
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        &nbsp;&nbsp;
+                    </span>Submit
+                </button>
             </div>
         </div>
     </form>
