@@ -13,6 +13,7 @@ import { FileExplorerComponent } from './components/root/main/files/file-explore
 import { ViewformComponent } from './components/viewform/viewform.component';
 import { ActiveFormsComponent } from './components/root/main/dashboard/active-forms/active-forms.component';
 import { RecentFormsComponent } from './components/root/main/dashboard/recent-forms/recent-forms.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,6 +32,7 @@ import { RecentFormsComponent } from './components/root/main/dashboard/recent-fo
     AppRoutingModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]
