@@ -11,6 +11,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { FileExplorerComponent } from './components/root/main/files/file-explorer/file-explorer.component';
 import { ViewformComponent } from './components/viewform/viewform.component';
+import { ActiveFormsComponent } from './components/root/main/dashboard/active-forms/active-forms.component';
+import { RecentFormsComponent } from './components/root/main/dashboard/recent-forms/recent-forms.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -20,6 +22,8 @@ import { ViewformComponent } from './components/viewform/viewform.component';
     FilesHeaderComponent,
     FileExplorerComponent,
     ViewformComponent,
+    ActiveFormsComponent,
+    RecentFormsComponent,
   ],
   imports: [
     BrowserModule,

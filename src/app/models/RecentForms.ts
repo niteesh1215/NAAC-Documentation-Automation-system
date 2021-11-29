@@ -7,7 +7,6 @@ export class RecentForms {
     folder?: string;
     closedon?: string;
     totalresponses?: number;
-    filecolor?: string;
     active?: boolean;
     routePath?: string;
     icon?: string;

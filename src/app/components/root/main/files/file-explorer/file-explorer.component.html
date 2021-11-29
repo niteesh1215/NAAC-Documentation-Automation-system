@@ -1,13 +1,20 @@
 <div class="file" *ngFor="let file of mainFolders">
-    <a routerLink="{{file.name}}">
-        <div>
-            <div class="file-info">
-                <a href=""><span class="material-icons" style="font-size:15px; color: #989898;">info</span></a>
-            </div>
-            <div style="float: right;">
-                <a href=""><span class="material-icons" style="font-size:18px; color: #989898;">more_vert</span></a>
-            </div>
+    <div>
+        <div class="file-info">
+            <a href=""><span class="material-icons" style="font-size:15px; color: #989898;">info</span></a>
         </div>
+        <div class="dropdown" style="float: right;">
+            <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
+                id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                <span class="material-icons" style="font-size:18px; color: #989898;">more_vert</span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-light text-small shadow" aria-labelledby="dropdownUser1">
+                <li><a class="dropdown-item" href="#" (click)="renameFolder()">Rename</a></li>
+                <li><a class="dropdown-item" href="#" style="color: red; margin-top:10px;" (click)="deleteFolder()">Delete</a></li>
+            </ul>
+        </div>
+    </div>
+    <a routerLink="{{file.name}}">
         <div>
 
             <div class="folder-icon" style>

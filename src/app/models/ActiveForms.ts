@@ -7,7 +7,6 @@ export class ActiveForms {
     folder?: string;
     activefrom?: string;
     totalresponses?: number;
-    filecolor?: string;
     active?: boolean;
     routePath?: string;
     icon?: string;
