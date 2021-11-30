@@ -1,5 +1,5 @@
 export class Form {
-    _id?: string;
+    _id?: any;
     name!: string;
     description?: string;
     path!: string;

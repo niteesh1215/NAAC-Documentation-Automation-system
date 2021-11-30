@@ -3,6 +3,7 @@ export enum IconType {
     fontawesome
 }
 export class MainFolders {
+    id?:string;
     name: string;
     description?: string;
     active?: boolean;

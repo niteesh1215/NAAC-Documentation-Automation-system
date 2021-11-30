@@ -25,4 +25,8 @@ export class FilesApiService extends ApiService {
     return this.http.post<any>(this.url + '/retrieve', {'path':path})
   }
 
+  deleteFile(id: string): Observable<LResponse> {
+    return this.http.delete<LResponse>(this.url + '/delete-file/'+id)
+  }
+
 }
