@@ -9,6 +9,10 @@ a{
     line-height: 23px;
 }
 
+p{
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
 .file{
     display: inline-block;
     width: 211.09px; 

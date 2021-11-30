@@ -3,6 +3,7 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/internal/operators/filter';
 import { IconType, MainFolders } from 'src/app/models/MainFolders';
 import { InteractionService } from 'src/app/services/interaction_services/interaction.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-file-explorer',
@@ -13,7 +14,7 @@ export class FileExplorerComponent implements OnInit {
 
   path?: string = '/files'
   lastPath = "";
-
+  
   sendPath(value: string) {
     this._interactionService.sendPath(value);
   }
@@ -62,7 +63,7 @@ export class FileExplorerComponent implements OnInit {
     },
   ];
 
-  constructor(private router: Router, private _interactionService: InteractionService) {
+  constructor(private router: Router, private _interactionService: InteractionService, private modalService: NgbModal) {
 
   }
 
@@ -75,6 +76,10 @@ export class FileExplorerComponent implements OnInit {
       }
     })
     this.sendPath(this.router.url)
+  }
+
+  openModal(content: any) {
+    this.modalService.open(content);
   }
 
   deleteFolder(): void{

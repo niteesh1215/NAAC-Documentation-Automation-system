@@ -7,7 +7,8 @@
         <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <button class="btn my-bg-primary text-white">+ Create New Folder</button>
+                    <button class="btn my-bg-primary text-white" (click)="openModal(createFolder)">+ Create New
+                        Folder</button>
                 </li>
                 <li class="nav-item">
                     <button class="btn my-bg-primary text-white mx-5" routerLink="/create-form">+ Create New
@@ -38,3 +39,31 @@
         </div>
     </div>
 </nav>
+
+
+<!--Create New Folder Modal-->
+<ng-template #createFolder let-modal>
+    <div class="modal-header" style="margin: 0px 30px;">
+        <p class="modal-title" style="font-size:24px;">Create New Folder</p>
+        <button type="button" class="close" aria-label="Close" style="color:#989898"
+            (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <form>
+        <div class="modal-body">
+            <div class="form-field">
+                <p style="font-size:18px; color: #505050;">Folder Name</p>
+                <input type="text" class="create-folder-input">
+            </div>
+            <div class="form-field" style="margin-top: 16px;">
+                <p style="font-size:18px; color: #505050;">Description</p>
+                <textarea class="create-folder-input" style="height: 133px; resize: none;"></textarea>
+            </div>
+        </div>
+        <div class="modal-footer" style="margin: 0px 30px;">
+            <button type="button" class="btn cancel-btn" (click)="modal.close('Close click')">Cancel</button>
+            <button type="submit" class="btn create-btn">Create</button>
+        </div>
+    </form>
+</ng-template>
