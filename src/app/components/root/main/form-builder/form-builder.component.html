@@ -1,5 +1,5 @@
 <form [formGroup]="formDetailsForm" (ngSubmit)="onSubmitFormDetails()">
-    <div class="card mb-3" [hidden]="showFormBuilder">
+    <div class="card mb-3">
         <div class="card-header">
             <h3 class="card-title">Enter form details</h3>
         </div>
@@ -53,11 +53,17 @@
             </div>
         </div>
         <div class="card-footer d-flex justify-content-between">
-            <button class="btn btn-danger text-white" id="clear-form-builder">Clear</button>
+            <button class="btn btn-danger text-white" [disabled]="showLoadingIndicator"
+                id="clear-form-builder">Clear</button>
             <div>
                 <!-- <button class="btn btn-success text-white mx-5" id="save-form-builder">Save</button> -->
-                <button class="btn my-bg-primary text-white" [title]="!formDetailsForm.valid ? 'Fill form details to enable':''" [disabled]="!formDetailsForm.valid" type="submit"
-                    id="done-form-builder">Save</button>
+                <button class="btn my-bg-primary text-white"
+                    [title]="!formDetailsForm.valid ? 'Fill form details to enable':''"
+                    [disabled]="!formDetailsForm.valid" type="submit" id="done-form-builder"><span
+                        *ngIf="showLoadingIndicator">
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        &nbsp;&nbsp;
+                    </span>Save</button>
             </div>
 
         </div>

@@ -1,5 +1,5 @@
 
-export interface LResponse {
+export interface LResponse<T = any> {
     status: string,
-    data: object,
+    data: T,
 }

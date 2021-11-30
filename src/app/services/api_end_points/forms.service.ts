@@ -1,24 +1,22 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Form } from 'src/app/models/form';
 import { LResponse } from 'src/app/models/l_response';
 import { ApiService } from './api.service';
-import { File } from 'src/app/models/file';
 
 @Injectable({
   providedIn: 'root'
 })
-export class FilesApiService extends ApiService {
-
+export class FormsApiService extends ApiService {
   url!: string;
-
   constructor(private http: HttpClient) {
     super();
-    this.url = this.baseUrl + '/files';
+    this.url = this.baseUrl + '/form';
   }
 
-  createFile(file: File): Observable<LResponse<string>> {
-    return this.http.put<LResponse<string>>(this.url + '/create-file', file);
+  retrieveForm(formId: string): Observable<LResponse<Form>> {
+    return this.http.get<LResponse<Form>>(this.url + '/retrieve/' + formId);
   }
 
 }

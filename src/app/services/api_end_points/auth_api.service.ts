@@ -16,8 +16,8 @@ export class AuthApiService extends ApiService {
     this.url = this.baseUrl + '/auth';
   }
 
-  login(user: User): Observable<LResponse> {
-    return this.http.post<LResponse>(this.url + '/login', {
+  login(user: User): Observable<LResponse<string>> {
+    return this.http.post<LResponse<string>>(this.url + '/login', {
       'email': user.email!,
       'pwd': user.pwd!
     });
