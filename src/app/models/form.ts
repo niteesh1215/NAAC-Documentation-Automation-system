@@ -1,8 +1,16 @@
 export class Form {
     _id?: string;
-    formName!: string;
+    name!: string;
     description?: string;
-    formFields: Object[] = [
+    path!: string;
+    limitToSingleResponse: boolean = false;
+    responseGroupId!: string;
+    createdOn?: number;
+    isActive?: boolean;
+    activeFrom?: number;
+    activeEnd?: number;
+    lastModified?: number;
+    template: Object[] = [
 
     ];
 }

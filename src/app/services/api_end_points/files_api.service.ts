@@ -3,34 +3,22 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { LResponse } from 'src/app/models/l_response';
 import { ApiService } from './api.service';
+import { File } from 'src/app/models/file';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthApiService extends ApiService {
+export class FilesApiService extends ApiService {
 
   url!: string;
 
   constructor(private http: HttpClient) {
     super();
-    this.url = this.baseUrl + '/auth';
+    this.url = this.baseUrl + '/files';
   }
 
-  login(user: User): Observable<LResponse> {
-    return this.http.post<LResponse>(this.url + '/login', {
-      'email': user.email!,
-      'pwd': user.pwd!
-    });
-
+  createFile(file: File): Observable<LResponse> {
+    return this.http.put<LResponse>(this.url + '/create-file', file);
   }
+
 }
-
-
-export interface User {
-  email?: string,
-  name?: string,
-  pwd?: string,
-}
-
-
-

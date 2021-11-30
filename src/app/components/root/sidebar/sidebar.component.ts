@@ -8,6 +8,7 @@ import { IconType, MenuOption } from 'src/app/models/MenuOption';
   styleUrls: ['./sidebar.component.css']
 })
 export class SidebarComponent implements OnInit {
+  
   sideBarOptions: MenuOption[] = [
     {
       name: 'Dashboard',

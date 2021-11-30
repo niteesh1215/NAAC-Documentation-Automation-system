@@ -26,3 +26,8 @@ body {
 .selected {
   background-color: var(--selected);
 }
+
+.required-field:after {
+  content:"*";
+  color:red;
+}
