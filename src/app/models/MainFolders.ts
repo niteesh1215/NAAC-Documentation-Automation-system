@@ -4,6 +4,7 @@ export enum IconType {
 }
 export class MainFolders {
     name: string;
+    description?: string;
     active?: boolean;
     routePath?: string;
     iconType?: IconType;
