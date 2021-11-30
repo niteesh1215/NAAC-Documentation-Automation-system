@@ -6,6 +6,8 @@ import { Subject } from 'rxjs';
 })
 export class InteractionService {
 
+  currentPath='/files';
+
   private _fileExplorerMessageSource = new Subject<string>();
 
   fileExplorerMessage$ = this._fileExplorerMessageSource.asObservable();
@@ -15,6 +17,7 @@ export class InteractionService {
   }
 
   sendPath(path: string) {
+    this.currentPath = path;
     this._fileExplorerMessageSource.next(path);
   }
 }
