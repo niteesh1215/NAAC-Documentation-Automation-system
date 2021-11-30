@@ -3,7 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { AuthApiService } from 'src/app/services/api_end_points/auth_api.service';
-import { LRespose } from 'src/app/models/l_response';
+import { LResponse } from 'src/app/models/l_response';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
 
     const formData = this.loginForm.value;
     this.showLoadingButton = true;
-    this._apiService.login({ email: formData.email, pwd: formData.password }).subscribe((response: LRespose) => {
+    this._apiService.login({ email: formData.email, pwd: formData.password }).subscribe((response: LResponse) => {
       this.invalidCredentials = false
       if (response.status == 'success') {
         localStorage.setItem('token', 'qwerty12345');
