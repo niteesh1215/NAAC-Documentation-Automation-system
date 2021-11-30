@@ -17,8 +17,8 @@ export class FilesApiService extends ApiService {
     this.url = this.baseUrl + '/files';
   }
 
-  createFile(file: File): Observable<LResponse> {
-    return this.http.put<LResponse>(this.url + '/create-file', file);
+  createFile(file: File): Observable<LResponse<string>> {
+    return this.http.put<LResponse<string>>(this.url + '/create-file', file);
   }
 
   retrieveFile(path: string): Observable<any> {

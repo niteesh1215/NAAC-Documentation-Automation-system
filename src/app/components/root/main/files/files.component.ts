@@ -19,8 +19,6 @@ export class FilesComponent implements OnInit {
   constructor(private _interactionService:InteractionService,private notifierService: NotifierService) { }
 
   ngOnInit(): void {
-    this.notifierService.notify('success', 'You are awesome! I mean it!');
-
     this._interactionService.fileExplorerMessage$.subscribe((path)=>{
       this.recievePath(path);
     })

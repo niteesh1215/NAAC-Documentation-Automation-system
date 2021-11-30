@@ -12,8 +12,6 @@ declare var $: any;
   styleUrls: ['./form-builder.component.css']
 })
 export class FormBuilderComponent implements OnInit {
-
-  showFormBuilder: boolean = false;
   showLoadingIndicator: boolean = false;
 
   form: Form = {
@@ -36,7 +34,7 @@ export class FormBuilderComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder, private _filesApiService: FilesApiService, private notifierService: NotifierService) { }
 
-  ngOnInit(): void {    
+  ngOnInit(): void {
     this.customFromBuilder = $('#form-builder-container').formBuilder({
       showActionButtons: false
     });
@@ -58,7 +56,7 @@ export class FormBuilderComponent implements OnInit {
     if (!this.formDetailsForm.valid) return;
     const formData = this.formDetailsForm.value;
     this.form.name = formData.name;
-    this.form.description = formData.description;
+    this.form.description = formData.description.trim().length === 0 ? 'No description' : formData.description;
     this.form.path = '/files'
     this.form.responseGroupId = formData.responseGroupId;
     this.form.limitToSingleResponse = formData.limitToSingleResponse;
@@ -67,9 +65,9 @@ export class FormBuilderComponent implements OnInit {
     this.form.isActive = false;
     this.form.lastModified = Date.now();
     this.form.createdOn = Date.now();
-    console.log(this.form);
-    this.showFormBuilder = true;
+
     this.showLoadingIndicator = true;
+
     this._filesApiService.createFile({
       name: this.form.name,
       description: this.form.description || undefined,
@@ -78,13 +76,19 @@ export class FormBuilderComponent implements OnInit {
       createdOn: this.form.createdOn,
       formDetails: this.form,
     }).subscribe({
-      next: (lResponse: LResponse) => {
+      next: (lResponse: LResponse<string>) => {
+        if (lResponse.status == 'success') {
+          this.notifierService.notify('success', 'File created Successfully!')
+        } else {
+          this.notifierService.notify('error', 'Failed to create the file')
+        }
 
-        console.log(lResponse);
+        this.showLoadingIndicator = false;
 
 
       }, error: (e) => {
-
+        this.notifierService.notify('error', 'Failed to created the file')
+        this.showLoadingIndicator = false;
       }
     });
 
