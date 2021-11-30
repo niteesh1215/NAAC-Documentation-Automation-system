@@ -14,6 +14,8 @@ import { ViewformComponent } from './components/viewform/viewform.component';
 import { ActiveFormsComponent } from './components/root/main/dashboard/active-forms/active-forms.component';
 import { RecentFormsComponent } from './components/root/main/dashboard/recent-forms/recent-forms.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NotifierModule } from 'angular-notifier';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,7 +34,22 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     AppRoutingModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
-    NgbModule
+    NgbModule,
+    NotifierModule.withConfig(
+      {
+        position: {
+          horizontal: {
+            position: 'right',
+            distance: 12
+          },
+          vertical: {
+            position: 'top',
+            distance: 12,
+            gap: 10
+          }
+        }
+      }
+    )
   ],
   providers: [],
   bootstrap: [AppComponent]

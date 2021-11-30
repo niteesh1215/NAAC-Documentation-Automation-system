@@ -3,6 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Form } from 'src/app/models/form';
 import { FilesApiService } from 'src/app/services/api_end_points/files_api.service';
 import { LResponse } from 'src/app/models/l_response'
+import { NotifierService } from 'angular-notifier';
 declare var $: any;
 
 @Component({
@@ -33,9 +34,9 @@ export class FormBuilderComponent implements OnInit {
 
   customFromBuilder?: any;
 
-  constructor(private formBuilder: FormBuilder, private _filesApiService: FilesApiService) { }
+  constructor(private formBuilder: FormBuilder, private _filesApiService: FilesApiService, private notifierService: NotifierService) { }
 
-  ngOnInit(): void {
+  ngOnInit(): void {    
     this.customFromBuilder = $('#form-builder-container').formBuilder({
       showActionButtons: false
     });
@@ -58,17 +59,16 @@ export class FormBuilderComponent implements OnInit {
     const formData = this.formDetailsForm.value;
     this.form.name = formData.name;
     this.form.description = formData.description;
-    this.form.path = ''
+    this.form.path = '/files'
     this.form.responseGroupId = formData.responseGroupId;
     this.form.limitToSingleResponse = formData.limitToSingleResponse;
-    this.showFormBuilder = true;
     var template = this.customFromBuilder.actions.getData();
     this.form.template = template || [];
     this.form.isActive = false;
     this.form.lastModified = Date.now();
     this.form.createdOn = Date.now();
     console.log(this.form);
-
+    this.showFormBuilder = true;
     this.showLoadingIndicator = true;
     this._filesApiService.createFile({
       name: this.form.name,
@@ -81,7 +81,7 @@ export class FormBuilderComponent implements OnInit {
       next: (lResponse: LResponse) => {
 
         console.log(lResponse);
-        
+
 
       }, error: (e) => {
 
