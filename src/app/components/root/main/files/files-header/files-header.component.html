@@ -50,15 +50,15 @@
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
-    <form>
+    <form [formGroup]="folderDetailsForm" (ngSubmit)="onSubmitFolderDetails()">
         <div class="modal-body">
             <div class="form-field">
                 <p style="font-size:18px; color: #505050;">Folder Name</p>
-                <input type="text" class="create-folder-input">
+                <input type="text" class="create-folder-input" id="folderName" formControlName="folderName">
             </div>
             <div class="form-field" style="margin-top: 16px;">
                 <p style="font-size:18px; color: #505050;">Description</p>
-                <textarea class="create-folder-input" style="height: 133px; resize: none;"></textarea>
+                <textarea class="create-folder-input" style="height: 133px; resize: none;" id="description" formControlName="description"></textarea>
             </div>
         </div>
         <div class="modal-footer" style="margin: 0px 30px;">
