@@ -90,19 +90,18 @@
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
-        <div class="modal-body">
-            <div style="margin: 0px 30px;">
-                <p style="font-size:18px; color: #505050;">Please enter a new name</p>
-                <input type="text"
-                    style="border: 1px solid #989898; box-sizing: border-box; border-radius: 10px;width: 100%; height: 49px;">
+        <form [formGroup]="folderEditDetailsForm" (ngSubmit)="renameFolder()">
+            <div class="modal-body">
+                <div style="margin: 0px 30px;">
+                    <p style="font-size:18px; color: #505050;">Please enter a new name</p>
+                    <input type="text" id="renameFolder" formControlName="renameFolder" style="border: 1px solid #989898; box-sizing: border-box; border-radius: 10px;width: 100%; height: 49px;">
+                </div>
             </div>
-        </div>
-        <div class="modal-footer" style="margin: 0px 30px;">
-            <button type="button" class="btn" style="border: 1px solid #B7B7B7; color: #505050"
-                (click)="modal.close('Close click')">Cancel</button>
-            <button type="button" class="btn" (click)="renameFolder()"
-                style="background: #6A65A7; color: #fff;">Done</button>
-        </div>
+            <div class="modal-footer" style="margin: 0px 30px;">
+                <button type="button" class="btn" style="border: 1px solid #B7B7B7; color: #505050" (click)="modal.close('Close click')">Cancel</button>
+                <button type="submit" class="btn" style="background: #6A65A7; color: #fff;">Done</button>
+            </div>
+        </form>
     </ng-template>
 
     <!-------------------Delete Modal ----------------->

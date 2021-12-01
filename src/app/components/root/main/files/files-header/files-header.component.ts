@@ -79,7 +79,7 @@ export class FilesHeaderComponent implements OnInit {
         }
 
       }, error: (e) => {
-        this.notifierService.notify('Failed', 'Some Error Occured');
+        this.notifierService.notify('error', 'Some Error Occured');
       }
     });
 

@@ -22,11 +22,15 @@ export class FilesApiService extends ApiService {
   }
 
   retrieveFile(path: string): Observable<any> {
-    return this.http.post<any>(this.url + '/retrieve', {'path':path})
+    return this.http.post<any>(this.url + '/retrieve', {'path':path});
   }
 
   deleteFile(id: string): Observable<LResponse> {
-    return this.http.delete<LResponse>(this.url + '/delete-file/'+id)
+    return this.http.delete<LResponse>(this.url + '/delete-file/'+id);
+  }
+
+  renameFile(id: string, name: string): Observable<any> {
+    return this.http.put<LResponse<string>>(this.url + '/edit-file', {'id':id, 'editData':{'name':name}});
   }
 
 }
