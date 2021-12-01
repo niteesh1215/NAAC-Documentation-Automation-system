@@ -18,14 +18,15 @@ export class FileExplorerComponent implements OnInit {
 
   path?: string = '/files'
   lastPath = "";
-  todeleteid='';
-  
+  todeleteid = '';
+  showLoadingIndicator: boolean = false;
+
   sendPath(value: string) {
     this._interactionService.sendPath(value);
   }
-  
+
   mainFolders: MainFolders[] = [
-    
+
   ];
 
   constructor(private router: Router, private _interactionService: InteractionService, private modalService: NgbModal, private _filesApiService: FilesApiService, private notifierService: NotifierService) {
@@ -46,30 +47,35 @@ export class FileExplorerComponent implements OnInit {
     this.fetchfolders();
   }
 
-  fetchfolders(){
-    this.mainFolders=[];
+  fetchfolders() {
+    this.mainFolders = [];
     console.log(this.lastPath);
+    this.showLoadingIndicator = true;
     this._filesApiService.retrieveFile(this.lastPath).subscribe({
       next: (lResponse: LResponse<Form[]>) => {
         console.log(lResponse);
         for (var form of lResponse.data) {
-          this.mainFolders.push({id:form._id!['$oid'] as string  ,name: form.name, description: form.description, iconType: IconType.material})
+          
+          this.mainFolders.push({ id: form._id!['$oid'] as string, name: form.name, description: form.description, iconType: IconType.material })
         }
+
+
+        this.showLoadingIndicator = false;
       }
     })
   }
 
-  openModal(content: any, id:string) {
+  openModal(content: any, id: string) {
     this.todeleteid = id;
     console.log(this.todeleteid);
     this.modalService.open(content);
   }
 
-  deleteFolder(): void{
+  deleteFolder(): void {
     this._filesApiService.deleteFile(this.todeleteid).subscribe({
       next: (lResponse: LResponse) => {
         console.log(lResponse);
-        if(lResponse.status == 'success'){
+        if (lResponse.status == 'success') {
           this.fetchfolders();
           this.todeleteid = '';
           this.notifierService.notify('success', 'Deleted Successfully');
@@ -80,8 +86,8 @@ export class FileExplorerComponent implements OnInit {
 
   }
 
-  renameFolder(): void{
-    
+  renameFolder(): void {
+
   }
 
 }
