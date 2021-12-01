@@ -57,6 +57,7 @@ export class FileExplorerComponent implements OnInit {
     this.showLoadingIndicator = true;
     this.mainFolders = [];
     console.log(this.lastPath);
+    this.showLoadingIndicator = true;
     this._filesApiService.retrieveFile(this.lastPath).subscribe({
       next: (lResponse: LResponse<File[]>) => {
         console.log(lResponse);
