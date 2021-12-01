@@ -3,12 +3,14 @@ export enum IconType {
     fontawesome
 }
 export class MainFolders {
-    id?:string;
+    id?: string;
     name: string;
     description?: string;
     active?: boolean;
     routePath?: string;
+    type!: string;
     iconType?: IconType;
+    formId?: string;
 
 
     constructor(name = "menu") {

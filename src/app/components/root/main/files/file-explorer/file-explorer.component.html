@@ -1,9 +1,15 @@
+<div [hidden]="!showLoadingIndicator" class="loading-indicator-container">
+    <div class="spinner-border text-info" role="status">
+    </div>
+</div>
+
+<!-- <h5 class="card-title p-2 my-bg-secondary" style="position:absolute; width: 100%; ">Folders</h5> -->
 <div class="file" *ngFor="let file of mainFolders">
     <div>
-        <div class="file-info">
-            <a href="" [title]="file.description"><span class="material-icons" style="font-size:15px; color: #989898;">info</span></a>
+        <div class="file-info cursor-pointer">
+            <a [title]="file.description"><span class="material-icons"
+                    style="font-size:15px; color: #989898;">info</span></a>
         </div>
-
 
         <div class="dropdown" style="float: right;">
             <a class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
@@ -11,32 +17,77 @@
                 <span class="material-icons" style="font-size:18px; color: #989898;">more_vert</span>
             </a>
             <ul class="dropdown-menu dropdown-menu-light text-small shadow" aria-labelledby="dropdownUser1">
-                <li><a class="dropdown-item" (click)="openModal(rename,file.id!)">Rename</a></li>
-                <li><a class="dropdown-item" style="color: red; margin-top:10px;"
-                    (click)="openModal(delete,file.id!)">Delete</a></li>
+                <li><a class="dropdown-item cursor-pointer" (click)="openModal(rename,file.id!)">Rename</a></li>
+                <li><a class="dropdown-item cursor-pointer" style="color: red; margin-top:10px;"
+                        (click)="openModal(delete,file.id!)">Delete</a></li>
             </ul>
         </div>
     </div>
 
 
-    <a routerLink="{{file.name}}">
-        <div>
+    <div *ngIf="file.type == 'FOLDER'; else elseBlock">
+        <a routerLink="{{file.name }}">
+            <div>
+                <div *ngIf="file.type == 'FOLDER'; else elseBlock">
+                    <div class="folder-icon">
+                        <span class="material-icons" style="font-size:110px; color: orangered;">folder</span>
+                    </div>
+                </div>
+                <ng-template #elseBlock>
+                    <div class="folder-icon">
+                        <span class="material-icons" style="font-size:110px;color: #035397;">description</span>
+                    </div>
+                </ng-template>
 
-            <div class="folder-icon" style>
-                <span class="material-icons" style="font-size:110px; color: orangered;">folder</span>
+
+                <div class="folder-title" [title]="file.name"
+                    style="width: 170.09px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                    {{file.name}}
+                </div>
             </div>
-            <div class="folder-title" [title]="file.name" style="width: 170.09px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                {{file.name}}
+        </a>
+    </div>
+    <ng-template #elseBlock>
+        <a href="http://localhost:4200/viewform/{{file.formId}}" target="_blank">
+            <div>
+                <div *ngIf="file.type == 'FOLDER'; else elseBlock">
+                    <div class="folder-icon">
+                        <span class="material-icons" style="font-size:110px; color: orangered;">folder</span>
+                    </div>
+                </div>
+                <ng-template #elseBlock>
+                    <div class="folder-icon">
+                        <span class="material-icons" style="font-size:110px;color: #035397;">description</span>
+                    </div>
+                </ng-template>
+
+
+                <div class="folder-title" [title]="file.name"
+                    style="width: 170.09px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                    {{file.name}}
+                </div>
             </div>
-        </div>
-    </a>
+        </a>
+    </ng-template>
 </div>
+
+
+<div [hidden]="showLoadingIndicator">
+    <div [hidden]="!(mainFolders.length == 0)" class="loading-indicator-container">
+        <p>Nothing here yet</p>
+    </div>
+</div>
+
+
+
+
 
 <!-------------------Rename Modal ----------------->
 <ng-template #rename let-modal>
     <div class="modal-header" style="margin: 0px 30px;">
         <p class="modal-title" style="font-size:24px;">Rename</p>
-        <button type="button" class="close" aria-label="Close" style="color:#989898"(click)="modal.dismiss('Cross click')">
+        <button type="button" class="close" aria-label="Close" style="color:#989898"
+            (click)="modal.dismiss('Cross click')">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
@@ -48,8 +99,10 @@
         </div>
     </div>
     <div class="modal-footer" style="margin: 0px 30px;">
-        <button type="button" class="btn" style="border: 1px solid #B7B7B7; color: #505050" (click)="modal.close('Close click')">Cancel</button>
-        <button type="button" class="btn" (click)="renameFolder()" style="background: #6A65A7; color: #fff;">Done</button>
+        <button type="button" class="btn" style="border: 1px solid #B7B7B7; color: #505050"
+            (click)="modal.close('Close click')">Cancel</button>
+        <button type="button" class="btn" (click)="renameFolder()"
+            style="background: #6A65A7; color: #fff;">Done</button>
     </div>
 </ng-template>
 
@@ -57,7 +110,8 @@
 <ng-template #delete let-modal>
     <div class="modal-header" style="margin: 0px 30px;">
         <p class="modal-title" style="font-size:24px;">Delete</p>
-        <button type="button" class="close" aria-label="Close" style="color:#989898"(click)="modal.dismiss('Cross click')">
+        <button type="button" class="close" aria-label="Close" style="color:#989898"
+            (click)="modal.dismiss('Cross click')">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
@@ -67,7 +121,9 @@
         </div>
     </div>
     <div class="modal-footer" style="margin: 0px 30px;">
-        <button type="button" class="btn" style="border: 1px solid #B7B7B7; color: #505050" (click)="modal.close('Close click')">Cancel</button>
-        <button type="button" class="btn" (click)="deleteFolder()" style="background: #DC1D1D; color: #fff;">Delete</button>
+        <button type="button" class="btn" style="border: 1px solid #B7B7B7; color: #505050"
+            (click)="modal.close('Close click')">Cancel</button>
+        <button type="button" class="btn" (click)="deleteFolder()"
+            style="background: #DC1D1D; color: #fff;">Delete</button>
     </div>
 </ng-template>

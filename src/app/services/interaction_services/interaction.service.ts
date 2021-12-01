@@ -6,11 +6,14 @@ import { Subject } from 'rxjs';
 })
 export class InteractionService {
 
-  currentPath='/files';
+  currentPath = '/files';
 
   private _fileExplorerMessageSource = new Subject<string>();
-
   fileExplorerMessage$ = this._fileExplorerMessageSource.asObservable();
+
+
+  private _fetchFileMessageSource = new Subject<boolean>();
+  fetchFileMessageSource$ = this._fetchFileMessageSource.asObservable();
 
   constructor() {
 
@@ -19,5 +22,9 @@ export class InteractionService {
   sendPath(path: string) {
     this.currentPath = path;
     this._fileExplorerMessageSource.next(path);
+  }
+
+  fetchFile(shouldFetchFolder: boolean){
+    this._fetchFileMessageSource.next(shouldFetchFolder);
   }
 }

@@ -6,6 +6,7 @@ import { FilesApiService } from 'src/app/services/api_end_points/files_api.servi
 import { LResponse } from 'src/app/models/l_response'
 import { Router } from '@angular/router';
 import { NotifierService } from 'angular-notifier';
+import { InteractionService } from 'src/app/services/interaction_services/interaction.service';
 
 @Component({
   selector: 'app-files-header',
@@ -15,6 +16,7 @@ import { NotifierService } from 'angular-notifier';
 export class FilesHeaderComponent implements OnInit {
 
   isGridView = true;
+  showCreateFormButton = false;
 
   file: File = {
     name: '',
@@ -24,23 +26,37 @@ export class FilesHeaderComponent implements OnInit {
     type: 'FOLDER',
   }
 
+
   folderDetailsForm = this.formBuilder.group({
     folderName: ['', [Validators.required]],
     description: ['']
   });
 
-  constructor(private modalService: NgbModal, private formBuilder: FormBuilder, private _filesApiService: FilesApiService, private router: Router, private notifierService: NotifierService) { }
+  constructor(private modalService: NgbModal, private formBuilder: FormBuilder, private _filesApiService: FilesApiService, private router: Router, private notifierService: NotifierService, private _interactionService: InteractionService) {
+
+  }
 
   ngOnInit(): void {
-    console.log(this.router.url)
+    this._interactionService.fileExplorerMessage$.subscribe((path: string) => {
+      if (path != '/files') {
+        this.showCreateFormButton = true;
+      } else {
+        this.showCreateFormButton = false;
+      }
+    });
+
+    if (this.router.url != '/files')
+      this.showCreateFormButton = true;
+    else
+      this.showCreateFormButton = false;
   }
-  
-  onSubmitFolderDetails(){
+
+  onSubmitFolderDetails() {
     if (!this.folderDetailsForm.valid) return;
     const formData = this.folderDetailsForm.value;
     this.file.name = formData.folderName;
     this.file.path = this.router.url;
-    this.file.description = formData.description.trim().length == 0 ? 'No Description' : formData.description 
+    this.file.description = formData.description.trim().length == 0 ? 'No Description' : formData.description
     this.file.createdOn = Date.now();
 
     this._filesApiService.createFile({
@@ -53,14 +69,15 @@ export class FilesHeaderComponent implements OnInit {
       next: (lResponse: LResponse) => {
 
         console.log(lResponse);
-        if(lResponse.status == 'success'){
+        if (lResponse.status == 'success') {
+          this._interactionService.fetchFile(true);
           this.notifierService.notify('success', 'Folder Created Successfully');
           this.modalService.dismissAll();
         }
-        else{
+        else {
           this.notifierService.notify('Failed', 'Some Error Occured');
         }
-      
+
       }, error: (e) => {
         this.notifierService.notify('Failed', 'Some Error Occured');
       }

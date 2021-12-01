@@ -20,3 +20,31 @@ export class FormsApiService extends ApiService {
   }
 
 }
+
+
+@Injectable({
+  providedIn: 'root'
+})
+export class FormResponseApiService extends ApiService {
+  url!: string;
+  constructor(private http: HttpClient) {
+    super();
+    this.url = this.baseUrl + '/form/response';
+  }
+
+  saveResponse(response: Response): Observable<LResponse> {
+    return this.http.post<LResponse>(this.url + '/add', response);
+  }
+
+}
+
+
+export interface Response {
+  _id?: any;
+  submittedOn: number,
+  formId: string,
+  email: string,
+  responseData: any,
+  responseGroupId: string,
+
+}

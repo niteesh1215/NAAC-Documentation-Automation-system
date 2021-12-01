@@ -1,10 +1,22 @@
 <div class="container">
-    <div class="card m-2">
-        <div class="card-body">
-            <div class="loading-indicator-container">
-                <div class="spinner-border text-info" role="status">
+    <form>
+        <div class="card mt-3">
+            <div class="card-body">
+                <div [hidden]="!showLoadingIndicator" class="loading-indicator-container">
+                    <div class="spinner-border text-info" role="status">
+                    </div>
+                </div>
+                <div class="output-form">
+
                 </div>
             </div>
+            <div class="card-footer">
+                <button [hidden]="showLoadingIndicator" (click)="onSubmit()" class="btn my-bg-primary text-white" type="button"
+                    id="done-form-builder"><span *ngIf="showButtonLoadingIndicator">
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        &nbsp;&nbsp;
+                    </span>Submit</button>
+            </div>
         </div>
-    </div>
+    </form>
 </div>

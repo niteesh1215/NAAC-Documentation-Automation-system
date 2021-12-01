@@ -7,6 +7,7 @@ import { IconType, MainFolders } from 'src/app/models/MainFolders';
 import { InteractionService } from 'src/app/services/interaction_services/interaction.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Form } from 'src/app/models/form';
+import { File } from 'src/app/models/file';
 import { NotifierService } from 'angular-notifier';
 
 @Component({
@@ -18,14 +19,16 @@ export class FileExplorerComponent implements OnInit {
 
   path?: string = '/files'
   lastPath = "";
-  todeleteid='';
-  
+  todeleteid = '';
+
+  showLoadingIndicator = false;
+
   sendPath(value: string) {
     this._interactionService.sendPath(value);
   }
-  
+
   mainFolders: MainFolders[] = [
-    
+
   ];
 
   constructor(private router: Router, private _interactionService: InteractionService, private modalService: NgbModal, private _filesApiService: FilesApiService, private notifierService: NotifierService) {
@@ -33,10 +36,14 @@ export class FileExplorerComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this._interactionService.fetchFileMessageSource$.subscribe((shouldFetchFolder: boolean) => {
+      if (shouldFetchFolder) this.fetchfolders()
+    });
+
     this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe((val) => {
       var url = (val as NavigationEnd).url;
-      if (this.lastPath != url) {
-        console.log(url);
+      if (this.lastPath != url && url.indexOf('/create-form') == -1) {
+        this.lastPath = url;
         this.sendPath(url);
         this.fetchfolders();
       }
@@ -46,30 +53,37 @@ export class FileExplorerComponent implements OnInit {
     this.fetchfolders();
   }
 
-  fetchfolders(){
-    this.mainFolders=[];
+  fetchfolders() {
+    this.showLoadingIndicator = true;
+    this.mainFolders = [];
     console.log(this.lastPath);
     this._filesApiService.retrieveFile(this.lastPath).subscribe({
-      next: (lResponse: LResponse<Form[]>) => {
+      next: (lResponse: LResponse<File[]>) => {
         console.log(lResponse);
-        for (var form of lResponse.data) {
-          this.mainFolders.push({id:form._id!['$oid'] as string  ,name: form.name, description: form.description, iconType: IconType.material})
+        for (var file of lResponse.data) {
+          this.mainFolders.push({ id: file._id!['$oid'] as string, name: file.name, description: file.description, type: file.type, formId: file.formId, iconType: IconType.material });
         }
+      },
+      error: () => {
+
+      },
+      complete: () => {
+        this.showLoadingIndicator = false;
       }
     })
   }
 
-  openModal(content: any, id:string) {
+  openModal(content: any, id: string) {
     this.todeleteid = id;
     console.log(this.todeleteid);
     this.modalService.open(content);
   }
 
-  deleteFolder(): void{
+  deleteFolder(): void {
     this._filesApiService.deleteFile(this.todeleteid).subscribe({
       next: (lResponse: LResponse) => {
         console.log(lResponse);
-        if(lResponse.status == 'success'){
+        if (lResponse.status == 'success') {
           this.fetchfolders();
           this.todeleteid = '';
           this.notifierService.notify('success', 'Deleted Successfully');
@@ -80,8 +94,8 @@ export class FileExplorerComponent implements OnInit {
 
   }
 
-  renameFolder(): void{
-    
+  renameFolder(): void {
+
   }
 
 }

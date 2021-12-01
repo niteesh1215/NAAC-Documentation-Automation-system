@@ -31,3 +31,17 @@ body {
   content:"*";
   color:red;
 }
+
+.cursor-pointer{
+  cursor: pointer;
+}
+
+
+.loading-indicator-container{
+
+  height: 50vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

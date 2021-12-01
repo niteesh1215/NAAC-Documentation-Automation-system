@@ -25,6 +25,9 @@ const routes: Routes = [
           },
           {
             path: '**', component: FileExplorerComponent
+          },
+          {
+            path: '**/create-from', component: FormBuilderComponent
           }
         ]
       },

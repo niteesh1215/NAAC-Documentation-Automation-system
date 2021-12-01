@@ -10,7 +10,7 @@
                     <button class="btn my-bg-primary text-white" (click)="openModal(createFolder)">+ Create New
                         Folder</button>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" [hidden]="!showCreateFormButton">
                     <button class="btn my-bg-primary text-white mx-5" routerLink="/create-form">+ Create New
                         Form</button>
                 </li>
@@ -58,7 +58,8 @@
             </div>
             <div class="form-field" style="margin-top: 16px;">
                 <p style="font-size:18px; color: #505050;">Description</p>
-                <textarea class="create-folder-input" style="height: 133px; resize: none;" id="description" formControlName="description"></textarea>
+                <textarea class="create-folder-input" style="height: 133px; resize: none;" id="description"
+                    formControlName="description"></textarea>
             </div>
         </div>
         <div class="modal-footer" style="margin: 0px 30px;">

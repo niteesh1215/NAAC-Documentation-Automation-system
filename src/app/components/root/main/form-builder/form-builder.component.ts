@@ -4,6 +4,7 @@ import { Form } from 'src/app/models/form';
 import { FilesApiService } from 'src/app/services/api_end_points/files_api.service';
 import { LResponse } from 'src/app/models/l_response'
 import { NotifierService } from 'angular-notifier';
+import { InteractionService } from 'src/app/services/interaction_services/interaction.service';
 declare var $: any;
 
 @Component({
@@ -32,9 +33,11 @@ export class FormBuilderComponent implements OnInit {
 
   customFromBuilder?: any;
 
-  constructor(private formBuilder: FormBuilder, private _filesApiService: FilesApiService, private notifierService: NotifierService) { }
+  constructor(private formBuilder: FormBuilder, private _filesApiService: FilesApiService, private notifierService: NotifierService, private _interactionService: InteractionService) { }
 
   ngOnInit(): void {
+
+    this.form.path = this._interactionService.currentPath
     this.customFromBuilder = $('#form-builder-container').formBuilder({
       showActionButtons: false
     });
@@ -57,7 +60,6 @@ export class FormBuilderComponent implements OnInit {
     const formData = this.formDetailsForm.value;
     this.form.name = formData.name;
     this.form.description = formData.description.trim().length === 0 ? 'No description' : formData.description;
-    this.form.path = '/files'
     this.form.responseGroupId = formData.responseGroupId;
     this.form.limitToSingleResponse = formData.limitToSingleResponse;
     var template = this.customFromBuilder.actions.getData();
