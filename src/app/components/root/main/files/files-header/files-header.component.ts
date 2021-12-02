@@ -7,6 +7,7 @@ import { LResponse } from 'src/app/models/l_response'
 import { Router } from '@angular/router';
 import { NotifierService } from 'angular-notifier';
 import { InteractionService } from 'src/app/services/interaction_services/interaction.service';
+//import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-files-header',
@@ -17,6 +18,7 @@ export class FilesHeaderComponent implements OnInit {
 
   isGridView = true;
   showCreateFormButton = false;
+  uploadedDocument?: File;
 
   file: File = {
     name: '',
@@ -30,6 +32,11 @@ export class FilesHeaderComponent implements OnInit {
   folderDetailsForm = this.formBuilder.group({
     folderName: ['', [Validators.required]],
     description: ['']
+  });
+
+  fileUploadForm = this.formBuilder.group({
+    folderName: ['', [Validators.required]],
+    description: [''],
   });
 
   constructor(private modalService: NgbModal, private formBuilder: FormBuilder, private _filesApiService: FilesApiService, private router: Router, private notifierService: NotifierService, private _interactionService: InteractionService) {
@@ -49,6 +56,49 @@ export class FilesHeaderComponent implements OnInit {
       this.showCreateFormButton = true;
     else
       this.showCreateFormButton = false;
+  }
+
+  onFileSelected(event:any){
+    this.uploadedDocument = event.target.files[0];
+    console.log(this.uploadedDocument);
+  }
+
+  onSubmitFileUpload(){
+    if (!this.fileUploadForm.valid) return;
+    const formData = this.fileUploadForm.value;
+    this.file.name = formData.folderName;
+    this.file.description = formData.description.trim().length == 0 ? 'No Description' : formData.description;
+    this.file.path = this.router.url;
+    this.file.document = this.uploadedDocument;
+    this.file.createdOn = Date.now();
+
+    this._filesApiService.uploadFile({
+      name: this.file.name,
+      path: this.file.path,
+      description: this.file.description,
+      type: 'OTHER',
+      createdOn: this.file.createdOn,
+      document: this.file.document
+    }).subscribe({
+      next: (lResponse: LResponse) => {
+        if(lResponse.status=='success'){
+          formData.folderName = '';
+          formData.description = '';
+          this._interactionService.fetchFile(true);
+          this.notifierService.notify('success', 'Uploaded File Successfully');
+          this.modalService.dismissAll();
+          console.log(lResponse);
+        }
+        else {
+          console.log(lResponse);
+          this.notifierService.notify('error', 'Some Error Occured');
+        }
+      }, error: (e) => {
+        
+        console.log(e);
+        this.notifierService.notify('error', 'Some Error Occured');
+      }
+    })
   }
 
   onSubmitFolderDetails() {

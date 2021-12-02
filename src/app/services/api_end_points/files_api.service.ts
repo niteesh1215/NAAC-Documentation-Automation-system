@@ -33,4 +33,16 @@ export class FilesApiService extends ApiService {
     return this.http.put<LResponse<string>>(this.url + '/edit-file', {'id':id, 'editData':{'name':name}});
   }
 
+  uploadFile(file: File): Observable<any> {
+    var createdOn = file.createdOn;
+    let formData: FormData = new FormData();
+    formData.append('name',file.name);
+    formData.append('description',file.description!);
+    formData.append('path',file.path);
+    formData.append('type',file.type);
+    formData.append('createdOn',createdOn.toString());
+    formData.append('document',file.document);    
+    return this.http.post(this.url + '/upload-file',formData);
+  }
+
 }

@@ -6,7 +6,9 @@ export interface File {
     path: string,
     description?: string,
     createdOn: number,
-    type: 'FORM' | 'FOLDER',
+    type: 'FORM' | 'FOLDER' | 'OTHER',
     formDetails?: Form,
     formId?: string,
+    document?:any
 }
+
