@@ -24,7 +24,7 @@ export class ViewformComponent implements OnInit {
 
   ngOnInit(): void {
     this._formId = this._activatedRoute.snapshot.paramMap.get('id') || undefined;
-    console.log(this._formId);
+  
     if (this._formId != undefined) {
       this.formsApiService.retrieveForm(this._formId).subscribe(
         {

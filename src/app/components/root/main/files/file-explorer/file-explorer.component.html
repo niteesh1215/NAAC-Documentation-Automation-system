@@ -23,51 +23,26 @@
             </ul>
         </div>
 
-
-        <div *ngIf="file.type == 'FOLDER'; else elseBlock">
-            <a routerLink="{{file.name }}">
-                <div>
-                    <div *ngIf="file.type == 'FOLDER'; else elseBlock">
-                        <div class="folder-icon">
-                            <span class="material-icons" style="font-size:110px; color: orangered;">folder</span>
-                        </div>
-                    </div>
-                    <ng-template #elseBlock>
-                        <div class="folder-icon">
-                            <span class="material-icons" style="font-size:110px;color: #035397;">description</span>
-                        </div>
-                    </ng-template>
-
-
-                    <div class="folder-title" [title]="file.name"
-                        style="width: 170.09px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                        {{file.name}}
+        <a routerLink="{{file.type == 'FOLDER' ? file.name : '/customize-form/'+file.formId}}">
+            <div>
+                <div *ngIf="file.type == 'FOLDER'; else elseBlock">
+                    <div class="folder-icon">
+                        <span class="material-icons" style="font-size:110px; color: orangered;">folder</span>
                     </div>
                 </div>
-            </a>
-        </div>
-        <ng-template #elseBlock>
-            <a href="http://localhost:4200/viewform/{{file.formId}}" target="_blank">
-                <div>
-                    <div *ngIf="file.type == 'FOLDER'; else elseBlock">
-                        <div class="folder-icon">
-                            <span class="material-icons" style="font-size:110px; color: orangered;">folder</span>
-                        </div>
+                <ng-template #elseBlock>
+                    <div class="folder-icon">
+                        <span class="material-icons" style="font-size:110px;color: #035397;">description</span>
                     </div>
-                    <ng-template #elseBlock>
-                        <div class="folder-icon">
-                            <span class="material-icons" style="font-size:110px;color: #035397;">description</span>
-                        </div>
-                    </ng-template>
+                </ng-template>
 
 
-                    <div class="folder-title" [title]="file.name"
-                        style="width: 170.09px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                        {{file.name}}
-                    </div>
+                <div class="folder-title" [title]="file.name"
+                    style="width: 170.09px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                    {{file.name}}
                 </div>
-            </a>
-        </ng-template>
+            </div>
+        </a>
     </div>
 
 
@@ -76,9 +51,6 @@
             <p>Nothing here yet</p>
         </div>
     </div>
-
-
-
 
 
     <!-------------------Rename Modal ----------------->

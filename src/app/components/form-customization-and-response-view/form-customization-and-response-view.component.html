@@ -1,0 +1,96 @@
+<div class="container-fluid">
+    <div class="d-flex justify-content-center">
+        <div class="option-btn selected">
+            Template
+        </div>
+        <div class="option-btn">
+            Responses
+        </div>
+    </div>
+    <div class="group-id-bar">
+        <span class="group-id-item selected">
+            group id ajdfajl; falfjldsa fla; fl;ajflaj
+        </span>
+        <span class="group-id-item">
+            group id
+        </span>
+        <span class="group-id-item">
+            group id
+        </span>
+        <span class="group-id-item">
+            group id
+        </span>
+        <span class="group-id-item">
+            group id
+        </span>
+        <span class="group-id-item">
+            group id
+        </span>
+        <span class="group-id-item">
+            group id
+        </span>
+        <span class="group-id-item">
+            group id
+        </span>
+        <span class="group-id-item">
+            group id
+        </span>
+        <span class="group-id-item">
+            group id
+        </span>
+        <span class="group-id-item">
+            group id
+        </span>
+        <span class="group-id-item">
+            group id
+        </span>
+        <span class="group-id-item">
+            group id
+        </span>
+        <span class="group-id-item">
+            group id
+        </span>
+        <span class="group-id-item">
+            group id
+        </span>
+        <span class="group-id-item">
+            group id
+        </span>
+        <span class="group-id-item">
+            group id
+        </span>
+        <span class="group-id-item">
+            group id
+        </span>
+        <span class="group-id-item">
+            group id
+        </span>
+        <span class="group-id-item">
+            group id
+        </span>
+        <span class="group-id-item">
+            group id
+        </span>
+    </div>
+    <div [hidden]="!isLoading" class="loading-indicator-container">
+        <div class="spinner-border text-info" role="status">
+        </div>
+    </div>
+    <div class="mt-4">
+        <div *ngIf="!showResponseView">
+
+            <div *ngIf="this.form != undefined; else elseBlock">
+                <app-form-builder [form]="form"></app-form-builder>
+            </div>
+            <ng-template #elseBlock>
+                <div [hidden]="isLoading">
+                    An error occurred while retrieving the form.
+                </div>
+            </ng-template>
+
+        </div>
+        <div *ngIf="showResponseView">
+
+        </div>
+    </div>
+</div>

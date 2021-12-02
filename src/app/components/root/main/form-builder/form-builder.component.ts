@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Form } from 'src/app/models/form';
 import { FilesApiService } from 'src/app/services/api_end_points/files_api.service';
@@ -15,6 +15,7 @@ declare var $: any;
 export class FormBuilderComponent implements OnInit {
   showLoadingIndicator: boolean = false;
 
+  @Input()
   form: Form = {
     name: '',
     description: '',
@@ -37,9 +38,21 @@ export class FormBuilderComponent implements OnInit {
 
   ngOnInit(): void {
 
+    if (this.form._id != undefined) {
+      this.formDetailsForm = this.formBuilder.group({
+        name: [this.form.name, [Validators.required]],
+        responseGroupId: [this.form.responseGroupId, [Validators.required]],
+        limitToSingleResponse: [false],
+        description: [this.form.description || '']
+      });
+
+
+    }
+
     this.form.path = this._interactionService.currentPath
     this.customFromBuilder = $('#form-builder-container').formBuilder({
-      showActionButtons: false
+      showActionButtons: false,
+      defaultFields: this.form.template,
     });
 
     $('#clear-form-builder').click(() => {
@@ -64,9 +77,12 @@ export class FormBuilderComponent implements OnInit {
     this.form.limitToSingleResponse = formData.limitToSingleResponse;
     var template = this.customFromBuilder.actions.getData();
     this.form.template = template || [];
-    this.form.isActive = false;
-    this.form.lastModified = Date.now();
-    this.form.createdOn = Date.now();
+
+    if (this.form._id == undefined) {
+      this.form.isActive = false;
+      this.form.lastModified = Date.now();
+      this.form.createdOn = Date.now();
+    }
 
     this.showLoadingIndicator = true;
 
@@ -75,7 +91,7 @@ export class FormBuilderComponent implements OnInit {
       description: this.form.description || undefined,
       path: this.form.path,
       type: 'FORM',
-      createdOn: this.form.createdOn,
+      createdOn: this.form.createdOn!,
       formDetails: this.form,
     }).subscribe({
       next: (lResponse: LResponse<string>) => {

@@ -15,6 +15,7 @@ import { ActiveFormsComponent } from './components/root/main/dashboard/active-fo
 import { RecentFormsComponent } from './components/root/main/dashboard/recent-forms/recent-forms.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NotifierModule } from 'angular-notifier';
+import { FormCustomizationAndResponseViewComponent } from './components/form-customization-and-response-view/form-customization-and-response-view.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { NotifierModule } from 'angular-notifier';
     ViewformComponent,
     ActiveFormsComponent,
     RecentFormsComponent,
+    FormCustomizationAndResponseViewComponent,
   ],
   imports: [
     BrowserModule,

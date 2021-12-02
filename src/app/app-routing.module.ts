@@ -9,6 +9,7 @@ import { LoginComponent } from './components/login/login.component';
 import { AuthGuard } from './services/auth/auth.guard';
 import { FileExplorerComponent } from './components/root/main/files/file-explorer/file-explorer.component';
 import { ViewformComponent } from './components/viewform/viewform.component';
+import { FormCustomizationAndResponseViewComponent } from './components/form-customization-and-response-view/form-customization-and-response-view.component';
 const routes: Routes = [
   {
     path: '', component: RootComponent, canActivate: [AuthGuard], children: [
@@ -33,6 +34,9 @@ const routes: Routes = [
       },
       {
         path: 'create-form', component: FormBuilderComponent,
+      },
+      {
+        path: 'customize-form/:id', component: FormCustomizationAndResponseViewComponent
       }
     ]
   },

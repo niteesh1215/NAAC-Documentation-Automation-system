@@ -1,0 +1,42 @@
+.option-btn {
+  min-width: 200px;
+  min-height: 50px;
+  border: 1px solid var(--primary);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.option-btn.selected {
+  background-color: var(--primary);
+  color: var(--secondary);
+}
+
+.group-id-bar {
+  margin-top: 10px;
+  width: 100%;
+  min-height: 60px;
+  border: 1px solid var(--primary);
+  background-color: #e2e2e2;
+  overflow-x: scroll;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+}
+.group-id-item {
+  padding: 10px 15px;
+  text-align: center;
+  font-size: 16px;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 3px;
+  cursor: pointer;
+}
+
+.group-id-item.selected {
+  border-bottom: 1px solid var(--primary);
+  color: white;
+  background-color: var(--primary);
+}
