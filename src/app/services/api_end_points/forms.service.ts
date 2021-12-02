@@ -19,6 +19,10 @@ export class FormsApiService extends ApiService {
     return this.http.get<LResponse<Form>>(this.url + '/retrieve/' + formId);
   }
 
+  retrieveActiveForm(): Observable<any> {
+    return this.http.get<any>(this.url + '/retrieve-active');
+  }
+
 }
 
 

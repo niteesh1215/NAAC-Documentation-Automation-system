@@ -1,3 +1,8 @@
+<div [hidden]="!showLoadingIndicator" class="loading-indicator-container">
+    <div class="spinner-border text-info" role="status">
+    </div>
+</div>
+
 <div class="active-form" *ngFor="let option of activeForms">
     <span class="mx-2 material-icons" style="font-size:76px; color:red">{{option.icon}}</span>
     <div class="file-img">
@@ -6,10 +11,10 @@
                 <a href="">{{option.name}}</a>
             </div>
             <div>
-                <p><b>{{option.folder}}</b></p>
+                <p>Path : <b>{{option.routePath}}</b></p>
             </div>
             <div>
-                <p>Active from : <b style="color: blue;">{{option.activefrom}}</b></p>
+                <p>Created On: <b style="color: blue;">{{option.createdOn | date:'dd/MM/yyyy'}}</b></p>
             </div>
             <div>
                 <p>Total Responses : <b style="color: blue;">{{option.totalresponses}}</b></p>
