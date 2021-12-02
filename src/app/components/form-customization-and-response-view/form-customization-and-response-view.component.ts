@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { NotifierService } from 'angular-notifier';
 import { Form } from 'src/app/models/form';
 import { LResponse } from 'src/app/models/l_response';
-import { FormsApiService } from 'src/app/services/api_end_points/forms.service';
+import { FormResponseApiService, FormsApiService } from 'src/app/services/api_end_points/forms.service';
 
 @Component({
   selector: 'app-form-customization-and-response-view',
@@ -17,9 +17,13 @@ export class FormCustomizationAndResponseViewComponent implements OnInit {
   _formId?: string;
   form?: Form;
 
+  responses: any = [];
+  columnNames: any = [];
+
+
   isResponseEnabled?: boolean;
 
-  constructor(private _activatedRoute: ActivatedRoute, private _notifierService: NotifierService, private formsApiService: FormsApiService) { }
+  constructor(private _activatedRoute: ActivatedRoute, private _notifierService: NotifierService, private formsApiService: FormsApiService, private formResponseApiService: FormResponseApiService) { }
 
   ngOnInit(): void {
     this.isLoading = true;
@@ -47,6 +51,9 @@ export class FormCustomizationAndResponseViewComponent implements OnInit {
 
   toggleResponseView(value: boolean): void {
     this.showResponseView = value;
+    if (this.showResponseView) {
+      this.fetchRespnse();
+    }
   }
 
   enableResponse(event: any) {
@@ -65,6 +72,46 @@ export class FormCustomizationAndResponseViewComponent implements OnInit {
         this.isResponseEnabled = !status;
       }
     });
+  }
+
+
+  fetchRespnse() {
+    this.responses = [];
+    this.formResponseApiService.getResponses(this._formId!, "").subscribe({
+      next: (lResponse: LResponse) => {
+        if (lResponse['status'] === 'success') {
+          console.log(lResponse);
+          //this.responses = lResponse.data;
+          for (var response of lResponse.data) {
+            console.log('dsaldj')
+            var json: any = {}
+            for (var field of response.responseData) {
+              if (field['userData'] != undefined) {
+                console.log(field);
+                if (!this.columnNames.find(function (name: string) {
+                  return name == field.label;
+                })) {
+                  this.columnNames.push(field['label']);
+                }
+                var key: any = field['label'];
+                var value = field.userData.join(' ');
+
+                json[key] = value;
+
+              }
+            }
+            this.responses.push(json);
+          }
+          console.log(this.columnNames);
+
+          console.log(this.responses);
+
+
+        } else {
+          this._notifierService.notify('error', 'Could not find the data');
+        }
+      }
+    })
   }
 
 }

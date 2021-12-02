@@ -1,8 +1,11 @@
-<div class="container">
+<div *ngIf="formDisabled != undefined && formDisabled" class="d-flex align-items-center justify-content-center" style="height:200px">
+    This form is no longer accepting responses
+</div>
+<div class="container" [hidden]="formDisabled">
     <form>
         <div class="card mt-3">
             <div class="card-body">
-                <div [hidden]="!showLoadingIndicator" class="loading-indicator-container">
+                <div *ngIf="showLoadingIndicator" class="loading-indicator-container">
                     <div class="spinner-border text-info" role="status">
                     </div>
                 </div>
@@ -11,8 +14,8 @@
                 </div>
             </div>
             <div class="card-footer">
-                <button [hidden]="showLoadingIndicator" (click)="onSubmit()" class="btn my-bg-primary text-white" type="button"
-                    id="done-form-builder"><span *ngIf="showButtonLoadingIndicator">
+                <button [hidden]="showLoadingIndicator" (click)="onSubmit()" class="btn my-bg-primary text-white"
+                    type="button" id="done-form-builder"><span *ngIf="showButtonLoadingIndicator">
                         <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                         &nbsp;&nbsp;
                     </span>Submit</button>

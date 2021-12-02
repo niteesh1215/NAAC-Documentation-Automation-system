@@ -8,36 +8,13 @@
         </div>
         <div class="m-5"></div>
         <div [hidden]="isResponseEnabled == undefined" class="custom-control custom-switch">
-            <input type="checkbox" class="custom-control-input" id="customSwitch1" [(ngModel)]="isResponseEnabled" (change)="enableResponse($event)">
+            <input type="checkbox" class="custom-control-input" id="customSwitch1" [(ngModel)]="isResponseEnabled"
+                (change)="enableResponse($event)">
             <label class="custom-control-label" for="customSwitch1">Enable Response</label>
         </div>
     </div>
     <div *ngIf="showResponseView" class="group-id-bar">
         <span class="group-id-item selected">
-            group id ajdfajl; falfjldsa fla; fl;ajflaj
-        </span>
-        <span class="group-id-item">
-            group id
-        </span>
-        <span class="group-id-item">
-            group id
-        </span>
-        <span class="group-id-item">
-            group id
-        </span>
-        <span class="group-id-item">
-            group id
-        </span>
-        <span class="group-id-item">
-            group id
-        </span>
-        <span class="group-id-item">
-            group id
-        </span>
-        <span class="group-id-item">
-            group id
-        </span>
-        <span class="group-id-item">
             group id
         </span>
         <span class="group-id-item">
@@ -94,8 +71,22 @@
             </ng-template>
 
         </div>
+        <div class="mt-4"></div>
         <div *ngIf="showResponseView">
-            reponseview
+            <table class="table table-striped mt-4">
+                <thead>
+                    <tr>
+                        <th *ngFor="let name of columnNames">{{ name.replace('\<br\>','') }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let response of responses">
+                        <td *ngFor="let name of columnNames">
+                            {{response[name] || ''}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

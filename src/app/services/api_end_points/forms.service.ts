@@ -51,8 +51,15 @@ export class FormResponseApiService extends ApiService {
     return this.http.post<LResponse>(this.url + '/add', response);
   }
 
-}
+  getResponses(formId: string, reponseGroupId: string): Observable<LResponse> {
+    return this.http.post<LResponse>(this.url + '/retrieve', {
+      "formId": formId,
+      "responseGroupId": reponseGroupId
+    });
+  }
 
+}
+  
 
 export interface Response {
   _id?: any;

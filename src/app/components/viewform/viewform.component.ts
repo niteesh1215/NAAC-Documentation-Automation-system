@@ -20,26 +20,45 @@ export class ViewformComponent implements OnInit {
 
   formRender: any;
 
+  formDisabled?: boolean;
+
   constructor(private _activatedRoute: ActivatedRoute, private notifierService: NotifierService, private formsApiService: FormsApiService, private formResponseApiService: FormResponseApiService) { }
 
   ngOnInit(): void {
     this._formId = this._activatedRoute.snapshot.paramMap.get('id') || undefined;
-  
+
     if (this._formId != undefined) {
       this.formsApiService.retrieveForm(this._formId).subscribe(
         {
           next: (lresponse: LResponse<Form>) => {
             console.log(lresponse.data);
-            this._responseGroupId = lresponse.data.responseGroupId;
+            console.log(lresponse);
             this.showLoadingIndicator = false;
             if (lresponse.status === 'success') {
+              this._responseGroupId = lresponse.data.responseGroupId;
+              if (lresponse.data.isActive) {
+                this.formDisabled = false;
+              } else {
+                this.formDisabled = true;
+                this.notifierService.notify('error', 'This form is no longer accepting responses');
+                return;
+              }
               this.formRender = $('.output-form').formRender({
                 formData: lresponse.data.template,
                 dataType: 'json',
                 render: true
               });
+            } else {
+              this.formDisabled = true;
             }
           },
+          error: () => {
+            this.showLoadingIndicator = false;
+          },
+
+          complete: () => {
+            this.showLoadingIndicator = false;
+          }
         }
       );
     } else {
