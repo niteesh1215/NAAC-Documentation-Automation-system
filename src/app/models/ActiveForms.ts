@@ -4,13 +4,15 @@ export enum IconType {
 }
 export class ActiveForms {
     name: string;
+    id?: string;
     folder?: string;
-    activefrom?: string;
+    createdOn?: string;
     totalresponses?: number;
     active?: boolean;
     routePath?: string;
     icon?: string;
     iconType?: IconType;
+    description?: string;
 
 
     constructor(name = "menu") {

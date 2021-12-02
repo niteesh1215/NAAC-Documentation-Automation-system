@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { IconType, ActiveForms } from 'src/app/models/ActiveForms';
+import { FormsApiService } from 'src/app/services/api_end_points/forms.service';
+import { LResponse } from 'src/app/models/l_response';
+import { File } from 'src/app/models/file';
+import { InteractionService } from 'src/app/services/interaction_services/interaction.service';
+import { NotifierService } from 'angular-notifier';
 @Component({
   selector: 'app-active-forms',
   templateUrl: './active-forms.component.html',
@@ -7,72 +12,31 @@ import { IconType, ActiveForms } from 'src/app/models/ActiveForms';
 })
 export class ActiveFormsComponent implements OnInit {
 
-  activeForms: ActiveForms[] = [
-    {
-      name: 'Activity',
-      folder:'Department',
-      activefrom: '28th June 2021',
-      totalresponses:40,
-      active: true,
-      routePath: '/dashboard',
-      icon: 'insert_drive_file',
-      iconType: IconType.material
-    },
-    {
-      name: 'Online Course',
-      folder:'Student',
-      activefrom: '17th June 2021',
-      totalresponses: 15,
-      active: true,
-      routePath: '/dashboard',
-      icon: 'insert_drive_file',
-      iconType: IconType.material
-    },
-    {
-      name: 'Seminar',
-      folder:'Department',
-      activefrom: '28th June 2021',
-      totalresponses:35,
-      active: true,
-      routePath: '/dashboard',
-      icon: 'insert_drive_file',
-      iconType: IconType.material
-    },
-    {
-      name: 'Research and Consultancy',
-      folder:'Faculty',
-      activefrom: '28th June 2021',
-      totalresponses:85,
-      active: true,
-      routePath: '/dashboard',
-      icon: 'insert_drive_file',
-      iconType: IconType.material
-    },
-    {
-      name: 'Major Programs',
-      folder:'Department Activity',
-      activefrom: '28th June 2021',
-      totalresponses:35,
-      active: true,
-      routePath: '/dashboard',
-      icon: 'insert_drive_file',
-      iconType: IconType.material
-    },
-    {
-      name: 'Software Development Cell',
-      folder:'Best Practices',
-      activefrom: '28th June 2021',
-      totalresponses:35,
-      active: true,
-      routePath: '/dashboard',
-      icon: 'insert_drive_file',
-      iconType: IconType.material
-    },
-    
-  ];
-  constructor() { }
+  activeForms: ActiveForms[ ] = [ ];
+  showLoadingIndicator = false;
+   
+  constructor(private _formsApiService: FormsApiService, private notifierService: NotifierService, private _interactionService: InteractionService) { }
 
   ngOnInit(): void {
+    this.fetchActiveForm();
+  }
+
+  fetchActiveForm(){
+    this.showLoadingIndicator = true;
+    this.activeForms = [];
+    this._formsApiService.retrieveActiveForm().subscribe({
+      next: (lResponse: LResponse<File[]>) => {
+        for (var file of lResponse.data) {
+          let d = new Date(file.createdOn).toLocaleDateString("en-US");
+          this.activeForms.push({name: file.name, id: file._id!['$oid'] as string, iconType: IconType.material, description: file.description, routePath: file.path, createdOn: d, icon: 'insert_drive_file'});
+        }
+      }, error: (e) => {
+        this.notifierService.notify('error', 'Some Error Occured');
+      },
+      complete: () => {
+        this.showLoadingIndicator = false;
+      }
+    })
   }
 
 }

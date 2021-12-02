@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { FilesApiService } from 'src/app/services/api_end_points/files_api.service';
+import { FormBuilder, Validators } from '@angular/forms'
 import { LResponse } from 'src/app/models/l_response'
 import { filter } from 'rxjs/internal/operators/filter';
 import { IconType, MainFolders } from 'src/app/models/MainFolders';
@@ -19,7 +20,8 @@ export class FileExplorerComponent implements OnInit {
 
   path?: string = '/files'
   lastPath = "";
-  todeleteid = '';
+  toRenameDeleteId = '';
+  renameValue = '';
 
   showLoadingIndicator = false;
 
@@ -27,11 +29,13 @@ export class FileExplorerComponent implements OnInit {
     this._interactionService.sendPath(value);
   }
 
-  mainFolders: MainFolders[] = [
+  mainFolders: MainFolders[] = [ ];
 
-  ];
+  folderEditDetailsForm = this.formBuilder.group({
+    renameFolder: ['', [Validators.required]]
+  });
 
-  constructor(private router: Router, private _interactionService: InteractionService, private modalService: NgbModal, private _filesApiService: FilesApiService, private notifierService: NotifierService) {
+  constructor(private formBuilder: FormBuilder, private router: Router, private _interactionService: InteractionService, private modalService: NgbModal, private _filesApiService: FilesApiService, private notifierService: NotifierService) {
 
   }
 
@@ -56,11 +60,11 @@ export class FileExplorerComponent implements OnInit {
   fetchfolders() {
     this.showLoadingIndicator = true;
     this.mainFolders = [];
-    console.log(this.lastPath);
+    //console.log(this.lastPath);
     this.showLoadingIndicator = true;
     this._filesApiService.retrieveFile(this.lastPath).subscribe({
       next: (lResponse: LResponse<File[]>) => {
-        console.log(lResponse);
+        //console.log(lResponse);
         for (var file of lResponse.data) {
           this.mainFolders.push({ id: file._id!['$oid'] as string, name: file.name, description: file.description, type: file.type, formId: file.formId, iconType: IconType.material });
         }
@@ -75,19 +79,19 @@ export class FileExplorerComponent implements OnInit {
   }
 
   openModal(content: any, id: string) {
-    this.todeleteid = id;
-    console.log(this.todeleteid);
+    this.toRenameDeleteId = id;
+    //console.log(this.toRenameDeleteId);
     this.modalService.open(content);
   }
 
   deleteFolder(): void {
-    this._filesApiService.deleteFile(this.todeleteid).subscribe({
+    this._filesApiService.deleteFile(this.toRenameDeleteId).subscribe({
       next: (lResponse: LResponse) => {
-        console.log(lResponse);
+        //console.log(lResponse);
         if (lResponse.status == 'success') {
           this.fetchfolders();
-          this.todeleteid = '';
-          this.notifierService.notify('success', 'Deleted Successfully');
+          this.toRenameDeleteId = '';
+          this.notifierService.notify('success', 'Folder Deleted Successfully');
           this.modalService.dismissAll();
         }
       }
@@ -96,7 +100,41 @@ export class FileExplorerComponent implements OnInit {
   }
 
   renameFolder(): void {
+    if (!this.folderEditDetailsForm.valid) return;
+    const formData = this.folderEditDetailsForm.value;
+    this.renameValue = formData.renameFolder;
+    
+    if(!this.searchFolderName(this.renameValue)) {
+      this._filesApiService.renameFile(this.toRenameDeleteId,this.renameValue).subscribe({
+        next: (lResponse: LResponse) => {
+          //console.log(lResponse);
+          if(lResponse.status == 'success') {
+            this.fetchfolders();
+            this.toRenameDeleteId = '';
+            this.renameValue='';
+            formData.renameFolder = '';
+            this.notifierService.notify('success', 'Folder Rename Successfully');
+            this.modalService.dismissAll();
+          }
+          else {
+            this.notifierService.notify('error', 'Some Error Occured');
+          }
+        }, error: (e) => {
+          this.notifierService.notify('error', 'Some Error Occured');
+        }
+      })
+    }
+    else{
+      this.notifierService.notify('error', 'File/Folder Name Already Exists');
+    }
 
+  }
+
+  searchFolderName(folderName: string){
+    if(this.mainFolders.find(e => e.name === folderName)){
+      return true;
+    }
+    return false;
   }
 
 }
