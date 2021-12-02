@@ -71,9 +71,9 @@ export class FilesHeaderComponent implements OnInit {
     this.file.document = this.uploadedDocument;
     this.file.createdOn = Date.now();
 
-    this._filesApiService.createFile({
+    this._filesApiService.uploadFile({
       name: this.file.name,
-      description: this.file.description,
+      description: this.file.description || undefined,
       path: this.file.path,
       type: 'OTHER',
       createdOn: this.file.createdOn,
@@ -83,11 +83,15 @@ export class FilesHeaderComponent implements OnInit {
         if(lResponse.status=='success'){
           this.notifierService.notify('success', 'Uploaded File Successfully');
           this.modalService.dismissAll();
+          console.log(lResponse);
         }
         else {
+          console.log(lResponse);
           this.notifierService.notify('error', 'Some Error Occured');
         }
       }, error: (e) => {
+        
+        console.log(e);
         this.notifierService.notify('error', 'Some Error Occured');
       }
     })
