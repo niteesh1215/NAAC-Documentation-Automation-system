@@ -59,12 +59,13 @@ export class FilesHeaderComponent implements OnInit {
   }
 
   onFileSelected(event:any){
-    this.uploadedDocument = <File>event.target.files[0];
+    this.uploadedDocument = event.target.files[0];
+    console.log(this.uploadedDocument);
   }
 
   onSubmitFileUpload(){
     if (!this.fileUploadForm.valid) return;
-    const formData = this.folderDetailsForm.value;
+    const formData = this.fileUploadForm.value;
     this.file.name = formData.folderName;
     this.file.description = formData.description.trim().length == 0 ? 'No Description' : formData.description;
     this.file.path = this.router.url;
@@ -73,14 +74,17 @@ export class FilesHeaderComponent implements OnInit {
 
     this._filesApiService.uploadFile({
       name: this.file.name,
-      description: this.file.description || undefined,
       path: this.file.path,
+      description: this.file.description,
       type: 'OTHER',
       createdOn: this.file.createdOn,
       document: this.file.document
     }).subscribe({
       next: (lResponse: LResponse) => {
         if(lResponse.status=='success'){
+          formData.folderName = '';
+          formData.description = '';
+          this._interactionService.fetchFile(true);
           this.notifierService.notify('success', 'Uploaded File Successfully');
           this.modalService.dismissAll();
           console.log(lResponse);
