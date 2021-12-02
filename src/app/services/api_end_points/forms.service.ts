@@ -23,6 +23,17 @@ export class FormsApiService extends ApiService {
     return this.http.get<any>(this.url + '/retrieve-active');
   }
 
+  updateForm(form: Form): Observable<LResponse> {
+    return this.http.put<LResponse>(this.url + '/update/' + form._id['$oid'], form);
+  }
+
+  toggleIsFormActive(id: string, isActive: boolean): Observable<LResponse> {
+    return this.http.put<LResponse>(this.url + '/toggle-is-active', {
+      '_id': id,
+      'isActive': isActive
+    });
+  }
+
 }
 
 

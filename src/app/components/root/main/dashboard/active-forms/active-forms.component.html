@@ -2,6 +2,11 @@
     <div class="spinner-border text-info" role="status">
     </div>
 </div>
+<div [hidden]="!(activeForms.length == 0)">
+    <div [hidden]="showLoadingIndicator" class="d-flex justify-content-center align-items-center" style="height:500px">
+        No active forms
+    </div>
+</div>
 
 <div class="active-form" *ngFor="let option of activeForms">
     <span class="mx-2 material-icons" style="font-size:76px; color:red">{{option.icon}}</span>

@@ -29,7 +29,7 @@ export class FileExplorerComponent implements OnInit {
     this._interactionService.sendPath(value);
   }
 
-  mainFolders: MainFolders[] = [ ];
+  mainFolders: MainFolders[] = [];
 
   folderEditDetailsForm = this.formBuilder.group({
     renameFolder: ['', [Validators.required]]
@@ -85,6 +85,7 @@ export class FileExplorerComponent implements OnInit {
   }
 
   deleteFolder(): void {
+    console.log(this.toRenameDeleteId)
     this._filesApiService.deleteFile(this.toRenameDeleteId).subscribe({
       next: (lResponse: LResponse) => {
         //console.log(lResponse);
@@ -103,15 +104,15 @@ export class FileExplorerComponent implements OnInit {
     if (!this.folderEditDetailsForm.valid) return;
     const formData = this.folderEditDetailsForm.value;
     this.renameValue = formData.renameFolder;
-    
-    if(!this.searchFolderName(this.renameValue)) {
-      this._filesApiService.renameFile(this.toRenameDeleteId,this.renameValue).subscribe({
+
+    if (!this.searchFolderName(this.renameValue)) {
+      this._filesApiService.renameFile(this.toRenameDeleteId, this.renameValue).subscribe({
         next: (lResponse: LResponse) => {
           //console.log(lResponse);
-          if(lResponse.status == 'success') {
+          if (lResponse.status == 'success') {
             this.fetchfolders();
             this.toRenameDeleteId = '';
-            this.renameValue='';
+            this.renameValue = '';
             formData.renameFolder = '';
             this.notifierService.notify('success', 'Folder Rename Successfully');
             this.modalService.dismissAll();
@@ -124,14 +125,14 @@ export class FileExplorerComponent implements OnInit {
         }
       })
     }
-    else{
+    else {
       this.notifierService.notify('error', 'File/Folder Name Already Exists');
     }
 
   }
 
-  searchFolderName(folderName: string){
-    if(this.mainFolders.find(e => e.name === folderName)){
+  searchFolderName(folderName: string) {
+    if (this.mainFolders.find(e => e.name === folderName)) {
       return true;
     }
     return false;

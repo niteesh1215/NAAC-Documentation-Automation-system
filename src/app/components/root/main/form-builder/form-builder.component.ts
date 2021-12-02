@@ -5,6 +5,7 @@ import { FilesApiService } from 'src/app/services/api_end_points/files_api.servi
 import { LResponse } from 'src/app/models/l_response'
 import { NotifierService } from 'angular-notifier';
 import { InteractionService } from 'src/app/services/interaction_services/interaction.service';
+import { FormsApiService } from 'src/app/services/api_end_points/forms.service';
 declare var $: any;
 
 @Component({
@@ -34,7 +35,7 @@ export class FormBuilderComponent implements OnInit {
 
   customFromBuilder?: any;
 
-  constructor(private formBuilder: FormBuilder, private _filesApiService: FilesApiService, private notifierService: NotifierService, private _interactionService: InteractionService) { }
+  constructor(private formBuilder: FormBuilder, private _filesApiService: FilesApiService, private notifierService: NotifierService, private _interactionService: InteractionService, private _formApiService: FormsApiService) { }
 
   ngOnInit(): void {
 
@@ -45,11 +46,13 @@ export class FormBuilderComponent implements OnInit {
         limitToSingleResponse: [false],
         description: [this.form.description || '']
       });
-
-
+      
     }
 
-    this.form.path = this._interactionService.currentPath
+    if (this.form._id == undefined) {
+      this.form.path = this._interactionService.currentPath
+    }
+
     this.customFromBuilder = $('#form-builder-container').formBuilder({
       showActionButtons: false,
       defaultFields: this.form.template,
@@ -86,6 +89,15 @@ export class FormBuilderComponent implements OnInit {
 
     this.showLoadingIndicator = true;
 
+    if (this.form._id == undefined) {
+      this.createNewFile();
+    } else {
+      this.updateForm();
+    }
+  }
+
+
+  createNewFile() {
     this._filesApiService.createFile({
       name: this.form.name,
       description: this.form.description || undefined,
@@ -96,22 +108,34 @@ export class FormBuilderComponent implements OnInit {
     }).subscribe({
       next: (lResponse: LResponse<string>) => {
         if (lResponse.status == 'success') {
-          this.notifierService.notify('success', 'File created Successfully!')
+          this.notifierService.notify('success', 'File created Successfully!');
         } else {
-          this.notifierService.notify('error', 'Failed to create the file')
+          this.notifierService.notify('error', 'Failed to create the file');
         }
-
         this.showLoadingIndicator = false;
-
-
       }, error: (e) => {
-        this.notifierService.notify('error', 'Failed to created the file')
+        this.notifierService.notify('error', 'Failed to created the file');
         this.showLoadingIndicator = false;
       }
     });
-
   }
 
+  updateForm() {
+    this._formApiService.updateForm(this.form).subscribe({
+      next: (lResponse: LResponse<string>) => {
+        if (lResponse.status == 'success') {
+          this.notifierService.notify('success', 'Updated successfully!');
+        } else {
+          this.notifierService.notify('error', 'Failed to update');
+        }
+        this.showLoadingIndicator = false;
+
+      }, error: (e) => {
+        this.notifierService.notify('error', 'Failed to update');
+        this.showLoadingIndicator = false;
+      }
+    });
+  }
 
   addFields(form: Object) {
 

@@ -1,13 +1,18 @@
 <div class="container-fluid">
-    <div class="d-flex justify-content-center">
-        <div class="option-btn selected">
+    <div class="d-flex justify-content-center align-items-center">
+        <div class="option-btn cursor-pointer" (click)="toggleResponseView(false)" [class.selected]="!showResponseView">
             Template
         </div>
-        <div class="option-btn">
+        <div class="option-btn cursor-pointer" (click)="toggleResponseView(true)" [class.selected]="showResponseView">
             Responses
         </div>
+        <div class="m-5"></div>
+        <div [hidden]="isResponseEnabled == undefined" class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input" id="customSwitch1" [(ngModel)]="isResponseEnabled" (change)="enableResponse($event)">
+            <label class="custom-control-label" for="customSwitch1">Enable Response</label>
+        </div>
     </div>
-    <div class="group-id-bar">
+    <div *ngIf="showResponseView" class="group-id-bar">
         <span class="group-id-item selected">
             group id ajdfajl; falfjldsa fla; fl;ajflaj
         </span>
@@ -90,7 +95,7 @@
 
         </div>
         <div *ngIf="showResponseView">
-
+            reponseview
         </div>
     </div>
 </div>
